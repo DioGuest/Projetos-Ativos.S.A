@@ -1,0 +1,134 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-ctl-mail
+spec:
+  selector:
+    matchLabels:
+      app: ms-ctl-mail
+  template:
+    metadata:
+      labels:
+        app: ms-ctl-mail
+    spec:
+      containers:
+      - name: ms-ctl-mail
+        image: '${MS_CLT_MAIL_DOCKER_IMAGE}'
+
+        env:
+        - name: USERNAME_DB
+          valueFrom:
+                secretKeyRef:
+                  name: ms-ctl-mail-secrets
+                  key: USERNAME_DB
+
+        - name: PASSWORD_DB
+          valueFrom:
+                secretKeyRef:
+                  name: ms-ctl-mail-secrets
+                  key: PASSWORD_DB
+
+        - name: SERVER_DB
+          valueFrom:
+                secretKeyRef:
+                  name: ms-ctl-mail-secrets
+                  key: SERVER_DB
+          
+        - name: DATABASE_DB
+          valueFrom:
+                secretKeyRef:
+                  name: ms-ctl-mail-secrets
+                  key: DATABASE_DB
+
+
+        - name: DRIVER_DB
+          value: "${DRIVER_DB}"
+
+        resources:
+          requests:
+            memory: "200Mi"
+            cpu: "300m"
+          limits:
+            memory: "200Mi"
+            cpu: "300"       
+        ports:
+        - containerPort: 5000
+            
+      imagePullSecrets:
+      - name: registry-oci
+---
+
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: hpa-ms-ctl-mail
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: ms-ctl-mail
+  minReplicas: ${REPLICAS_MIN_HPA}
+  maxReplicas: ${REPLICAS_MAX_HPA}
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 70
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-ms-ctl-mail
+  annotations:
+    oci.oraclecloud.com/load-balancer-type: "lb"
+    service.beta.kubernetes.io/oci-load-balancer-internal: "true"
+    service.beta.kubernetes.io/oci-load-balancer-subnet1: "${OCI_SUBNET_ID}"
+spec:
+  selector:
+    app: ms-ctl-mail
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 5000
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-ms-ctl-mail
+  namespace: ms-ctl-mail
+  annotations:
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+    nginx.ingress.kubernetes.io/session-cookie-name: "route"
+    nginx.ingress.kubernetes.io/session-cookie-expires: "3600"
+    nginx.ingress.kubernetes.io/session-cookie-max-age: "3600"
+  labels:
+    name: ingress-ms-ctl-mail
+spec:
+  ingressClassName: ${INGRESS_CLASS}
+  rules:
+    - host: ${URL_MS_CTL_MAIL}
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: svc-ms-ctl-mail
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - ativossa.com.br
+      secretName: ativossa-tls

@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.css') }}">
+	<link rel="icon" href="https://atv-mailing-images.s3.amazonaws.com/favicon_nsd.ico" type="image/x-icon">
+    <title>Ativos S.A</title>
+
+</head>
+<body>
+
+<div class="m_x_es-wrapper-color" style="background-color:#ffffff">
+	<table class="m_x_es-wrapper" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border-spacing:0px;padding:0;margin:0;width:100%;height:100%;background-repeat:repeat;background-position:center top;background-color:#ffffff">
+		<tbody>
+			<tr>
+				<td valign="top" style="padding:0;margin:0">
+					<table class="m_x_es-content" cellspacing="0" cellpadding="0" align="center" style="border-collapse:collapse;border-spacing:0px;table-layout:fixed!important;width:100%">
+						<tbody>
+							<tr>
+								<td align="center" style="padding:0;margin:0">
+									<table class="m_x_es-content-body" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center" style="border-collapse:collapse;border-spacing:0px;background-color:#ffffff;width:900px">
+										<tbody>
+											<tr>
+												<td align="left" style="padding:0;margin:0">
+													<table cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse;border-spacing:0px">
+														<tbody>
+															<tr>
+																<td align="center" valign="top" style="padding:0;margin:0;">
+																	<table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="border-collapse:collapse;border-spacing:0px">
+																		<tbody>
+																			<tr>
+																				<td align="center" style="padding:0;margin:0;font-size:0px"><img src="https://atv-mailing-images.s3.amazonaws.com/layout2_img1_big.png" alt="header" ></td>
+																			</tr>
+																		</tbody>
+																	</table>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</td>
+											</tr>
+											<tr>
+												<td align="left" style="padding:0;margin:0">
+													<table cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse;border-spacing:0px">
+														<tbody>
+															<tr>
+																<td align="center" valign="top" style="padding:0;margin:0;width:550px">
+																	<table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="border-collapse:collapse;border-spacing:0px">
+																		<tbody>
+																			<tr>
+																				<td align="left" style="padding-left:40px;padding-right:40px;">
+																					<p style="margin:0;font-family:'open sans','helvetica neue',helvetica,arial,sans-serif;line-height:24px;color:#606f89;font-size:16px"><br aria-hidden="true"><br aria-hidden="true">Ao optar por não receber nossos e-mails você deixa de receber lembretes e demais informações essenciais.<br>Isso pode levar a mal-entendidos, atrasos e comprometer o sucesso da sua jornada de atendimento. Pense nisso antes de decidir! </p>
+																				</td>
+																			</tr>
+																			<tr>
+																				<td align="center" style="margin:0;padding-top:10px;padding-bottom:10px;padding-left:40px;padding-right:40px;font-size:0">
+																					<table border="0" width="100%" height="100%" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;border-spacing:0px">
+																						<tbody>
+																							<tr>
+																								<td style="padding:0;margin:0;border-bottom:1px solid #cccccc;background:unset;height:1px;width:100%;margin:0px"></td>
+																							</tr>
+																						</tbody>
+																					</table>
+																				</td>
+																			</tr>
+																			<tr>
+																				<td align="left" style="padding:0;margin:0">
+																					<table cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse;border-spacing:0px">
+																					<tbody>
+																						<tr>
+																							<td align="center" valign="top" style="padding-left:40px;padding-right:40px;margin:0;width:550px">
+																								<div id="{{ page_id }}-formDiv" class="container-fluid">
+																									<form id="{{ page_id }}-form" autocomplete="off">
+																										<div>
+																											<h2 class="title" style="margin:0;font-family:'open sans','helvetica neue',helvetica,arial,sans-serif;line-height:30px;color:#025584;font-size:20px"><strong><em><font style="vertical-align:inherit"><font style="vertical-align:inherit">Não quer mais receber nossos e-mails no {{ destinatario }}?</font></font></em></strong></h2>
+																										</div>
+																										<div id="{{ page_id }}-div-options">
+																											<div style="margin-bottom: 10px;">
+																												<label class="title" style="margin:0;font-family:'open sans','helvetica neue',helvetica,arial,sans-serif;line-height:30px;color:#025584;font-size:20px"><strong><em><font style="vertical-align:inherit"><font style="vertical-align:inherit">Por favor nos diga por que você quer se desinscrever:</font></font></em></strong></label>
+																											</div>
+																											<div style="text-align: left;">
+																												{% for row_motivo in unsub_motivos %}
+																													<div style="margin-bottom: 5px;">
+																														<input type="radio" name="answer" value="{{ row_motivo[0] }}">
+																														<span style="margin-left: 5px; color: #025584;">
+																															{% if row_motivo[1].startswith("Não sou") %}
+																																Não sou {{ nome }}
+																															{% else %}
+																																{{ row_motivo[1] }}
+																															{% endif %}
+																														</span>
+																													</div>
+																												{% endfor %}
+
+																											</div>
+																										</div>
+																									</form>
+																								</div>
+																							</td>
+																						</tr>
+																					</tbody>
+																				</table>
+																				</td>
+																			</tr>
+																		</tbody>
+																	</table>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</td>
+											</tr>
+											<tr>
+												<td align="left" style="padding-left:160px;padding-right:160px;">
+													<table cellpadding="0" cellspacing="0" class="m_x_es-left" align="left" style="border-collapse:collapse;border-spacing:0px;float:left">
+														<tbody>
+															<tr>
+																<td class="m_x_es-m-p20b" align="left" style="padding:0;margin:0;width:205px">
+																	<table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="border-collapse:collapse;border-spacing:0px">
+																		<tbody>
+																			<tr>
+																				<td align="center" style="padding:0;margin:0;padding-top:35px;padding-bottom:35px;font-size:0px"><img src="https://atv-mailing-images.s3.amazonaws.com/layout2_img4.png" width="205" style="display:block;border:0px;outline:none;text-decoration:none;min-width:auto;min-height:auto" alt="amarelo"></td>
+																			</tr>
+																		</tbody>
+																	</table>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+													<table cellpadding="0" cellspacing="0" class="m_x_es-right" align="right" style="border-collapse:collapse;border-spacing:0px;float:right">
+														<tbody>
+															<tr>
+																<td align="left" style="padding:0;margin:0;width:325px">
+																	<table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="border-collapse:collapse;border-spacing:0px">
+																		<tbody>
+																			<tr>
+																				<td align="left" style="padding:0;margin:0;padding-left:25px;padding-top:40px;font-size:0px"><img src="https://atv-mailing-images.s3.amazonaws.com/layout2_img3.png" width="255" style="display:block;border:0px;outline:none;text-decoration:none;min-width:auto;min-height:auto;padding-bottom:20px" alt="seguranca"></td>
+																			</tr>
+																			<tr>
+																				<td align="left" style="padding:0;margin:0">
+																					<ul>
+																						<li style="font-family:'open sans','helvetica neue',helvetica,arial,sans-serif;line-height:21px;margin-bottom:15px;margin-left:0;color:#333333;font-size:14px">
+																							<p style="margin:0;font-family:'open sans','helvetica neue',helvetica,arial,sans-serif;line-height:21px;color:#606f89;font-size:14px"><font style="vertical-align:inherit"><font style="vertical-align:inherit">O e-mail com o boleto é enviado através </font></font><br aria-hidden="true"><font style="vertical-align:inherit"><font style="vertical-align:inherit">do domínio @<a href="http://ativossa.com.br&amp;source=gmail-html&amp;ust=1713312371354400&amp;usg=AOvVaw3_YX3IfxGIvDYBdpGxYQc1" target="_blank" rel="noreferrer">ativossa.com.br</a>.</font></font></p>
+																						</li>
+																						<li style="font-family:'open sans','helvetica neue',helvetica,arial,sans-serif;line-height:21px;margin-bottom:15px;margin-left:0;color:#333333;font-size:14px">
+																							<p style="margin:0;font-family:'open sans','helvetica neue',helvetica,arial,sans-serif;line-height:21px;color:#606f89;font-size:14px"><font style="vertical-align:inherit"><font style="vertical-align:inherit">Antes de efetuar o pagamento, confira se o nome está correto no boleto e se o destinatário do pagamento é Ativos S.A.</font></font></p>
+																						</li>
+																					</ul>
+																				</td>
+																			</tr>
+																		</tbody>
+																	</table>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</td>
+											</tr>
+											<tr>
+												<td align="left" style="padding-left:120px;margin:0">
+													<table cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse;border-spacing:0px">
+														<tbody>
+															<tr>
+																<td align="center" valign="top" style="padding:0;margin:0;width:550px">
+																	<table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="border-collapse:collapse;border-spacing:0px">
+																		<tbody>
+																			<tr>
+																				<td align="left" style="padding:0;margin:0;padding-top:35px;padding-left:40px">
+																					<p style="margin:0;font-family:'open sans','helvetica neue',helvetica,arial,sans-serif;line-height:24px;color:#606f89;font-size:16px"><font style="vertical-align:inherit"><font style="vertical-align:inherit">Conte com a gente.</font></font></p>
+																				</td>
+																			</tr>
+																		</tbody>
+																	</table>
+																</td>
+															</tr>
+															<tr>
+																<td align="center" valign="top" style="padding:0;margin:0;width:550px">
+																	<table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="border-collapse:collapse;border-spacing:0px">
+																		<tbody>
+																			<tr>
+																				<td align="left" style="padding:0;margin:0;padding-bottom:35px;padding-left:40px">
+																					<p style="margin:0;font-family:'open sans','helvetica neue',helvetica,arial,sans-serif;line-height:24px;color:#025584;font-size:16px"><strong><font style="vertical-align:inherit"><font style="vertical-align:inherit">Ativos SA</font></font></strong></p>
+																				</td>
+																			</tr>
+																		</tbody>
+																	</table>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</td>
+											</tr>
+											<tr>
+												<td align="left" style="padding:0;margin:0">
+													<table cellpadding="0" cellspacing="0" class="m_x_es-left" align="left" style="border-collapse:collapse;border-spacing:0px;float:left">
+														<tbody>
+															<tr>
+																<td class="m_x_es-m-p0r m_x_es-m-p20b" align="center" style="padding-left:40px;margin:0;width:333px">
+																	<table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="border-collapse:collapse;border-spacing:0px">
+																		<tbody>
+																			<tr>
+																				<td align="center" style="margin:0;padding-left:5px;padding-right:5px;padding-top:20px;padding-bottom:20px;font-size:0">
+																					<table border="0" width="100%" height="100%" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;border-spacing:0px">
+																						<tbody>
+																							<tr>
+																								<td style="padding:0;margin:0;border-bottom:1px solid #cccccc;background:unset;height:1px;width:100%;margin:0px"></td>
+																							</tr>
+																						</tbody>
+																					</table>
+																				</td>
+																			</tr>
+																		</tbody>
+																	</table>
+																</td>
+																<td class="m_x_es-hidden" style="padding:0;margin:0;width:10px"></td>
+															</tr>
+														</tbody>
+													</table>
+													<table cellpadding="0" cellspacing="0" class="m_x_es-left" align="left" style="border-collapse:collapse;border-spacing:0px;float:left">
+														<tbody>
+															<tr>
+																<td class="m_x_es-m-p20b" align="center" style="padding:0;margin:0;width:40px">
+																	<table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="border-collapse:collapse;border-spacing:0px">
+																		<tbody>
+																			<tr>
+																				<td align="center" style="padding:0;margin:0;font-size:0px"><a href="https://www.linkedin.com/company/ativossa/&amp;source=gmail-html&amp;ust=1713312371354400&amp;usg=AOvVaw0mjgpz3VXNYeiO8IakwU-T" rel="noopener noreferrer noreferrer" style="text-decoration:underline;color:#2cb543;font-size:14px" target="_blank"><img src="https://atv-mailing-images.s3.amazonaws.com/layout2_img5.png" width="40" style="display:block;border:0px;outline:none;text-decoration:none;min-width:auto;min-height:auto" alt="linkedin"></a></td>
+																			</tr>
+																		</tbody>
+																	</table>
+																</td>
+																</td>
+																<td class="m_x_es-hidden" style="padding:0;margin:0;width:10px"></td>
+															</tr>
+														</tbody>
+													</table>
+													<table cellpadding="0" cellspacing="0" class="m_x_es-left" align="left" style="border-collapse:collapse;border-spacing:0px;float:left">
+														<tbody>
+															<tr>
+																<td align="left" class="m_x_es-m-p20b" style="padding:0;margin:0;width:40px">
+																	<table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="border-collapse:collapse;border-spacing:0px">
+																		<tbody>
+																			<tr>
+																				<td align="center" style="padding:0;margin:0;font-size:0px"><a href="https://www.facebook.com/ativossa.oficial&amp;source=gmail-html&amp;ust=1713312371354400&amp;usg=AOvVaw15UcxD4dFb1twmr_0oj7ps" rel="noopener noreferrer noreferrer" style="text-decoration:underline;color:#2cb543;font-size:14px" target="_blank"><img src="https://atv-mailing-images.s3.amazonaws.com/layout2_img6.png" width="40" style="display:block;border:0px;outline:none;text-decoration:none;min-width:auto;min-height:auto" alt="facebook"></a></td>
+																			</tr>
+																		</tbody>
+																	</table>
+																</td>
+																<td class="m_x_es-hidden" style="padding:0;margin:0;width:10px"></td>
+															</tr>
+														</tbody>
+													</table>
+													<table cellpadding="0" cellspacing="0" class="m_x_es-left" align="left" style="border-collapse:collapse;border-spacing:0px;float:left">
+														<tbody>
+															<tr>
+																<td align="left" class="m_x_es-m-p20b" style="padding:0;margin:0;width:40px">
+																	<table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="border-collapse:collapse;border-spacing:0px">
+																		<tbody>
+																			<tr>
+																				<td align="center" style="padding:0;margin:0;font-size:0px"><a href="https://www.instagram.com/ativos_sa/&amp;source=gmail-html&amp;ust=1713312371354400&amp;usg=AOvVaw3Q1WWm6D8-rmi0gtsPjmxX" rel="noopener noreferrer noreferrer" style="text-decoration:underline;color:#2cb543;font-size:14px" target="_blank"><img src="https://atv-mailing-images.s3.amazonaws.com/layout2_img7.png" width="40" style="display:block;border:0px;outline:none;text-decoration:none;min-width:auto;min-height:auto" alt="instagram"></a></td>
+																			</tr>
+																		</tbody>
+																	</table>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+													<table cellpadding="0" cellspacing="0" class="m_x_es-right" align="right" style="border-collapse:collapse;border-spacing:0px;float:right">
+														<tbody>
+															<tr>
+																<td align="left" style="padding-right:40px;;margin:0;width:333px">
+																	<table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="border-collapse:collapse;border-spacing:0px">
+																		<tbody>
+																			<tr>
+																				<td align="center" style="margin:0;padding-left:5px;padding-right:5px;padding-top:20px;padding-bottom:20px;font-size:0">
+																					<table border="0" width="100%" height="100%" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;border-spacing:0px">
+																						<tbody>
+																							<tr>
+																								<td style="padding:0;margin:0;border-bottom:1px solid #cccccc;background:unset;height:1px;width:100%;margin:0px"></td>
+																							</tr>
+																						</tbody>
+																					</table>
+																				</td>
+																			</tr>
+																		</tbody>
+																	</table>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</td>
+											</tr>
+											<tr>
+												<td align="left" style="padding:0;margin:0">
+													<table cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse;border-spacing:0px">
+														<tbody>
+															<tr>
+																<td align="center" valign="top" style="padding:0;margin:0;width:550px">
+																	<table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="border-collapse:collapse;border-spacing:0px">
+																		<tbody>
+																			<tr>
+																				<td align="center" style="padding:0;margin:0;padding-top:25px;padding-bottom:40px">
+																					<p style="margin:0;font-family:'open sans','helvetica neue',helvetica,arial,sans-serif;line-height:21px;color:#606f89;font-size:14px">
+																						<strong><font style="vertical-align:inherit">Ativos S.A. Securitizadora de Créditos</font>
+																								<br aria-hidden="true">
+																								<font style="vertical-align:inherit">Gestão de Cobrança</font>
+																						</strong>
+																						<br aria-hidden="true">
+																						<font style="vertical-align:inherit">0800 644 3030</font>
+																						<br aria-hidden="true">
+																						<div style="margin-bottom: 10px;">
+																							<br>
+																							<button type="button" id="{{ page_id }}-Button" class="btn btn-primary" style="background-color: #025584; border-color: #025584;">Descadastrar</button>
+																						</div>
+																						<div id="message" style="display: none; margin-top: 5px;"></div>
+																					</p>
+																				</td>
+																			</tr>
+																		</tbody>
+																	</table>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var radios = document.querySelectorAll('input[type="radio"][name="answer"]');
+        var button = document.getElementById("{{ page_id }}-Button");
+        button.disabled = true; // Desabilita o botão inicialmente
+
+        radios.forEach(function(radio) {
+            radio.addEventListener("change", function() {
+                button.disabled = false; // Habilita o botão quando um rádio é selecionado
+            });
+        });
+
+        button.addEventListener("click", function() {
+            let selectedOption = document.querySelector("input[name='answer']:checked");
+            if (!selectedOption) {
+                showMessage("Por favor, selecione uma opção.");
+                return; // Stop further execution if no option is selected
+            }
+
+            let formData = new FormData(document.getElementById("{{ page_id }}-form"));
+            formData.append("id_emailing", "{{ id_emailing }}");
+
+            fetch("/unsubscribe", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    radios.forEach(function(radio) {
+                        radio.disabled = true;
+                    });
+
+                    button.style.display = 'none';
+                    return response.json();  // Alterado para response.json() para acessar o JSON retornado
+                } else {
+                    throw new Error("Erro ao descadastrar.");
+                }
+            })
+            .then(result => {
+                showMessage(result.message, true);  // Exibe a mensagem de sucesso retornada pelo servidor
+            })
+            .catch(error => {
+                console.error("Error:", error.message);
+                showMessage("Erro ao descadastrar.\nPor gentileza entre em contato com a Ativos através do atendimento@ativossa.com.br");
+            });
+        });
+    });
+
+    function showMessage(message, isSuccess = false) {
+        const messageDiv = document.getElementById("message");
+        messageDiv.textContent = message;
+        messageDiv.style.display = "block";
+        if (isSuccess) {
+            messageDiv.style.color = "green";
+        } else {
+            messageDiv.style.color = "red";
+        }
+        setTimeout(() => {
+            messageDiv.style.display = "none";
+        }, 5000); // Hide message after 5 seconds
+    }
+</script>
+
+</body>
+</html>
+
+

@@ -1,0 +1,83 @@
+
+# Trigger define quando esse pipeline deve ser executado.
+trigger:
+  - main
+
+# Pool especifica o pool de agentes no qual o pipeline será executado.
+pool:
+  name: ATIVOSSA
+
+# Stages do pipeline:
+stages:
+  - stage: Build
+    displayName: Build Stage
+    jobs:
+      - job: SonarQubeAnalyzes    
+        steps:      
+        - task: SonarQubePrepare@5
+          inputs:
+            SonarQube: 'sonarqube'
+            scannerMode: 'CLI'
+            configMode: 'manual'
+            cliProjectKey: 'ms-clt-mail'
+            cliProjectName: 'sonar.ms-clt-mail'
+            cliSources: '.'
+        - task: SonarQubeAnalyze@5
+          inputs:
+            jdkversion: 'JAVA_HOME_11_X64'
+        - task: SonarQubePublish@5
+          inputs:
+            pollingTimeoutSec: '300'
+      - job: BuildImage
+        dependsOn: SonarQubeAnalyzes
+        condition: succeeded()
+        displayName: Build an image
+        steps:
+          - task: Docker@2
+            displayName: Build and Push Docker image
+            inputs:
+              containerRegistry: 'registry-ms-ctl-mail'
+              repository: 'grjcjrg5acih/ms-clt-mail'
+              command: 'buildAndPush'
+              Dockerfile: '**/Dockerfile'
+              buildContext: '.'
+              tags: |
+                $(Build.BuildId)
+
+  - stage: Deploy
+    displayName: Deploy Stage
+    dependsOn: Build
+    jobs:
+      - job: DeployKubernetes
+        displayName: Deploy to Kubernetes
+        steps:
+          - task: CopyFiles@2
+            displayName: Copy Kubernetes manifest
+            inputs:
+              SourceFolder: './.devops/k8s'
+              Contents: '**'
+              TargetFolder: '$(build.artifactstagingdirectory)/k8s'
+              CleanTargetFolder: true
+              ignoreMakeDirErrors: true
+
+          - task: Bash@3
+            displayName: Set Docker image in Kubernetes manifest
+            inputs:
+              targetType: 'inline'
+              script: |
+                # Salvar o valor da variável em uma variável local
+                docker_image="${MS_CLT_MAIL_DOCKER_IMAGE}"
+
+                # Substituir a variável no arquivo 'deployment.yaml' usando 'sed'
+                sed -i "s|\${MS_CLT_MAIL_DOCKER_IMAGE}|$docker_image|g" deployment.yaml
+                cat deployment.yaml
+              workingDirectory: '$(build.artifactstagingdirectory)/k8s'
+            env:
+              MS_CLT_MAIL_DOCKER_IMAGE: 'gru.ocir.io/grjcjrg5acih/ms-clt-mail:$(Build.BuildId)'
+
+          - task: PublishPipelineArtifact@1
+            displayName: Publish Kubernetes manifest artifact
+            inputs:
+              targetPath: '$(build.artifactstagingdirectory)/k8s'
+              artifact: 'k8s'
+              publishLocation: 'pipeline'
